@@ -8,8 +8,8 @@ dotenv.config({ path: './config.env' });
 dbConnect.connectMongoDB(process.env.CONN_STR);
 
 //create server
-const port = process.env.PORT || 3000;
+const port = process.env.PORT_NUMBER;
 app.listen(port, () => {
     console.log('Server Started!');
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port ${port} \n`);
 });

@@ -6,7 +6,11 @@ class CategoryController {
     async getAll(req, res, next) {
         try {
             const categories = await this.service.getAllCategories();
-            res.json(categories);
+            res.status(200).json({
+                status: 'success',
+                length: categories.length,
+                data: categories,
+            });
         } catch (error) {
             next(error);
         }
@@ -15,7 +19,11 @@ class CategoryController {
     async getActive(req, res, next) {
         try {
             const categories = await this.service.getActiveCategories();
-            res.json(categories);
+            res.status(200).json({
+                status: 'success',
+                length: categories.length,
+                data: categories,
+            });
         } catch (error) {
             next(error);
         }
@@ -27,7 +35,10 @@ class CategoryController {
             if (!category) {
                 return res.status(404).json({ error: 'Category not found' });
             }
-            res.json(category);
+            res.status(200).json({
+                status: 'success',
+                data: category,
+            });
         } catch (error) {
             next(error);
         }
