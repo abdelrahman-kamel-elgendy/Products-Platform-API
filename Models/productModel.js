@@ -21,19 +21,16 @@ const productSchema = new mongoose.Schema({
         required: [true, 'Product price is required'],
         min: [0, 'Price cannot be negative']
     },
-    category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        required: [true, 'Product category is required']
-    },
     images: [String],
     isActive: {
         type: Boolean,
-        default: true
+        default: true,
+        select: false
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        select: false
     }
 });
 
@@ -48,16 +45,15 @@ productSchema.pre('save', async function () {
     }
 });
 
-productSchema.pre('findOneAndUpdate', async function (doc) {
-    if (doc) {
-        const category = await CategoryModel.findById(doc.category);
-        if (category) 
-            throw new Error('Category not found');
+productSchema.pre('findByIdAndUpdate', async function (doc) {
+    const category = await CategoryModel.findById(this.category);
 
-        if (!category.products.includes(doc._id)) {
-            category.products.push(doc._id);
-            await category.save();
-        }
+    if (!category)
+        throw new Error('Category not found');
+
+    if (!category.products.includes(this._id)) {
+        category.products.push(this._id);
+        await category.save();
     }
 });
 

@@ -8,8 +8,10 @@ class CategoryController {
             const categories = await this.service.getAllCategories();
             res.status(200).json({
                 status: 'success',
-                length: categories.length,
-                data: categories,
+                data: {
+                    length: categories.length,
+                    categories,
+                },
             });
         } catch (error) {
             next(error);
@@ -19,10 +21,13 @@ class CategoryController {
     async getActive(req, res, next) {
         try {
             const categories = await this.service.getActiveCategories();
+
             res.status(200).json({
                 status: 'success',
-                length: categories.length,
-                data: categories,
+                data: {
+                    length: categories.length,
+                    categories,
+                },
             });
         } catch (error) {
             next(error);
@@ -32,12 +37,14 @@ class CategoryController {
     async getById(req, res, next) {
         try {
             const category = await this.service.getCategoryById(req.params.id);
-            if (!category) {
-                return res.status(404).json({ error: 'Category not found' });
-            }
+            if (!category)
+                throw new Error('Category not found');
+
             res.status(200).json({
                 status: 'success',
-                data: category,
+                data: {
+                    category,
+                },
             });
         } catch (error) {
             next(error);
@@ -47,7 +54,15 @@ class CategoryController {
     async create(req, res, next) {
         try {
             const category = await this.service.createCategory(req.body);
-            res.status(201).json(category);
+            category.createdAt = undefined;
+            category.isActive = undefined;
+
+            res.status(201).json({
+                status: 'success',
+                data: {
+                    category,
+                },
+            });
         } catch (error) {
             next(error);
         }
@@ -56,10 +71,15 @@ class CategoryController {
     async update(req, res, next) {
         try {
             const category = await this.service.updateCategory(req.params.id, req.body);
-            if (!category) {
-                return res.status(404).json({ error: 'Category not found' });
-            }
-            res.json(category);
+            if (!category)
+                throw new Error('Category not found');
+
+            res.status(200).json({
+                status: 'success',
+                data: {
+                    category,
+                },
+            });
         } catch (error) {
             next(error);
         }
@@ -69,9 +89,15 @@ class CategoryController {
         try {
             const category = await this.service.deleteCategory(req.params.id);
             if (!category) {
-                return res.status(404).json({ error: 'Category not found' });
+                return res.status(404).json({
+                    status: 'fail',
+                    message: 'Category not found',
+                });
             }
-            res.json({ message: 'Category deleted successfully' });
+            res.status(200).json({
+                status: 'success',
+                message: 'Category deleted successfully',
+            });
         } catch (error) {
             next(error);
         }

@@ -11,7 +11,7 @@ const categorySchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    products:[
+    products: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product'
@@ -19,11 +19,13 @@ const categorySchema = new mongoose.Schema({
     ],
     isActive: {
         type: Boolean,
-        default: true
+        default: true,
+        select: false
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        select: false
     }
 });
 

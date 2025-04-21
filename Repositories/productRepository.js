@@ -1,4 +1,6 @@
+const mongoose = require('mongoose');
 const BaseRepository = require('./BaseRepository');
+const categoryModel = require('../Models/categoryModel');
 
 class ProductRepository extends BaseRepository {
     constructor(model) {
@@ -11,16 +13,6 @@ class ProductRepository extends BaseRepository {
 
     async getActiveProducts() {
         return this.model.find({ isActive: true });
-    }
-
-    async searchProducts(query) {
-        return this.model.find({
-            $or: [
-                { name: { $regex: query, $options: 'i' } },
-                { description: { $regex: query, $options: 'i' } }
-            ],
-            isActive: true
-        });
     }
 }
 

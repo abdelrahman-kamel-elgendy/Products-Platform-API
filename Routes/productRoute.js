@@ -4,7 +4,6 @@ const authMiddleware = require('../middlewares/auth');
 
 module.exports = (controller) => {
     router.get('/active', controller.getActive.bind(controller));
-    router.get('/search', controller.search.bind(controller));
     router.get('/category/:categoryId', controller.getByCategory.bind(controller));
 
     router.route('/')
