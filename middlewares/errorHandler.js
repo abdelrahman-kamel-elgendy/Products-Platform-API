@@ -1,10 +1,8 @@
 const errorHandler = (err, req, res, next) => {
-    console.error(err.stack);
+    // console.error(err.stack);
 
     const statusCode = err.status || 500;
     const message = statusCode === 500 ? 'Something went wrong!' : err.message;
-
-    console.log(err);
 
     if (err.name === 'ValidationError') {
         return res.status(400).json({
@@ -26,7 +24,7 @@ const errorHandler = (err, req, res, next) => {
         });
     }
 
-    if (err.message.includes('not found')) {
+    if (err.message.includes('Not found')) {
         return res.status(404).json({
             success: false,
             error: {

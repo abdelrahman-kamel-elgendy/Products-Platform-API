@@ -15,19 +15,19 @@ class ProductService {
         this.categoryRepository = categoryRepository;
     }
 
-    async getAllProducts() {
+    async getAll() {
         return this.productRepository.getAll();
     }
 
-    async getActiveProducts() {
+    async getActive() {
         return this.productRepository.getActiveProducts();
     }
 
-    async getProductById(id) {
+    async getById(id) {
         return this.productRepository.getById(id);
     }
 
-    async getProductsByCategory(categoryId) {
+    async getByCategory(categoryId) {
         const category = await this.categoryRepository.getById(categoryId);
         if (!category)
             throw new Error('Category not found');
@@ -37,7 +37,7 @@ class ProductService {
         return { category, products };
     }
 
-    async createProduct(productData) {
+    async create(productData) {
         const { error } = productSchema.validate(productData);
         if (error)
             throw new Error(error.details[0].message);
@@ -45,7 +45,7 @@ class ProductService {
         return this.productRepository.create(productData);
     }
 
-    async updateProduct(id, productData) {
+    async update(id, productData) {
         const { error } = productSchema.validate(productData);
         if (error)
             throw new Error(error.details[0].message);
@@ -53,7 +53,7 @@ class ProductService {
         return this.productRepository.update(id, productData);
     }
 
-    async deleteProduct(id) {
+    async delete(id) {
         return this.productRepository.delete(id);
     }
 }

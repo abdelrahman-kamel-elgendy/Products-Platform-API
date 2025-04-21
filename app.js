@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const errorHandler = require('./middlewares/errorHandler');
-const authMiddleware = require('./middlewares/auth');
 const bodyParser = require('body-parser');
 
 //models
@@ -25,9 +24,9 @@ const CategoryController = require('./Controllers/categoryController');
 const AuthController = require('./Controllers/authController');
 
 //routes
-const productRoute = require('./Routes/productRoute');
-const categoryRoute = require('./Routes/categoryRoute');
-const authRoute = require('./Routes/authRouter');
+const productRouter = require('./Routes/productRouter');
+const categoryRouter = require('./Routes/categoryRouter');
+const authRouter = require('./Routes/authRouter');
 
 //initialize express app
 const app = express();
@@ -51,9 +50,9 @@ const authController = new AuthController(authService);
 
 
 //routes
-app.use('/auth', authRoute(authController));
-app.use('/product', productRoute(productController));
-app.use('/category', categoryRoute(categoryController));
+app.use('/auth', authRouter(authController));
+app.use('/product', productRouter(productController));
+app.use('/category', categoryRouter(categoryController));
 
 //error handling middleware
 app.use(errorHandler);

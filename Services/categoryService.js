@@ -12,19 +12,19 @@ class CategoryService {
         this.repository = repository;
     }
 
-    async getAllCategories() {
+    async getAll() {
         return this.repository.getAll();
     }
 
-    async getActiveCategories() {
+    async getActive() {
         return this.repository.getActiveCategories();
     }
 
-    async getCategoryById(id) {
+    async getById(id) {
         return this.repository.getById(id);
     }
 
-    async createCategory(categoryData) {
+    async create(categoryData) {
         const { error } = categorySchema.validate(categoryData);
         if (error) throw new Error(error.details[0].message);
 
@@ -34,14 +34,14 @@ class CategoryService {
         return this.repository.create(categoryData);
     }
 
-    async updateCategory(id, categoryData) {
+    async update(id, categoryData) {
         const { error } = categorySchema.validate(categoryData);
         if (error) throw new Error(error.details[0].message);
 
         return this.repository.update(id, categoryData);
     }
 
-    async deleteCategory(id) {
+    async delete(id) {
         return this.repository.delete(id);
     }
 }

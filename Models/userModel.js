@@ -11,8 +11,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Email is required'],
         unique: [true, 'Email already exists'],
-        trim: true,
         lowercase: true
+    },
+    role: {
+        type: String,
+        enum: ['customer', 'admin'],
+        default: 'customer'
     },
     password: {
         type: String,
@@ -20,14 +24,15 @@ const userSchema = new mongoose.Schema({
         select: false,
         minlength: 8
     },
-    role: {
-        type: String,
-        enum: ['user', 'admin'],
-        default: 'user'
-    },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        select: false
+    },
+    passwordUpdatedAt: {
+        type: Date,
+        default: Date.now,
+        select: false
     }
 });
 

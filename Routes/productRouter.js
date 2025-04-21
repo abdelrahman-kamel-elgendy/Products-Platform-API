@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middlewares/auth');
 
 module.exports = (controller) => {
     router.get('/active', controller.getActive.bind(controller));
