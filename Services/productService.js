@@ -29,7 +29,7 @@ class ProductService {
 
     async getProductsByCategory(categoryId) {
         const category = await this.categoryRepository.getById(categoryId);
-        if (!category) 
+        if (!category)
             throw new Error('Category not found');
 
         return this.productRepository.getProductsByCategory(categoryId);
@@ -37,12 +37,8 @@ class ProductService {
 
     async createProduct(productData) {
         const { error } = productSchema.validate(productData);
-        if (error) 
-            throw new Error(error.details[0].message);
-
-        const category = await this.categoryRepository.getById(productData.category);
-        if (!category) 
-            throw new Error('Category not found');
+        if (error)
+            throw new Error(error.details[0].message);      
 
         return this.productRepository.create(productData);
     }
@@ -50,12 +46,6 @@ class ProductService {
     async updateProduct(id, productData) {
         const { error } = productSchema.validate(productData);
         if (error) throw new Error(error.details[0].message);
-
-        if (productData.category) {
-            const category = await this.categoryRepository.getById(productData.category);
-            if (!category) 
-                throw new Error('Category not found');
-        }
 
         return this.productRepository.update(id, productData);
     }
@@ -65,9 +55,9 @@ class ProductService {
     }
 
     async searchProducts(query) {
-        if (!query || query.trim() === '') 
+        if (!query || query.trim() === '')
             throw new Error('Search query cannot be empty');
-        
+
         return this.productRepository.searchProducts(query);
     }
 }

@@ -3,7 +3,8 @@ const Joi = require('joi'); // Importing Joi for validation
 const categorySchema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().allow(''),
-    isActive: Joi.boolean()
+    isActive: Joi.boolean(),
+    products: Joi.array().items(Joi.string())
 });
 
 class CategoryService {
