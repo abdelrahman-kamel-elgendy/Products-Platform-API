@@ -63,5 +63,4 @@ app.use('/category', categoryRouter(categoryController));
 //error handling middleware
 app.use(errorHandler);
 
-//save
 module.exports = app 
