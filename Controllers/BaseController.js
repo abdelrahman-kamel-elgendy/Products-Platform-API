@@ -1,4 +1,4 @@
-class CRUD_Controller {
+class BaseController {
     constructor(service) {
         this.service = service
     }
@@ -102,4 +102,4 @@ class CRUD_Controller {
     }
 }
 
-module.exports = CRUD_Controller;
+module.exports = BaseController;

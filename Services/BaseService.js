@@ -1,4 +1,4 @@
-class CRUD_Service {
+class BaseService {
     constructor(repository) {
         this.repository = repository;
     }
@@ -28,4 +28,4 @@ class CRUD_Service {
     }
 }
 
-module.exports = CRUD_Service;
+module.exports = BaseService;

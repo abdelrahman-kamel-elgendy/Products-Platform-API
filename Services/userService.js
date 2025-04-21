@@ -1,12 +1,20 @@
-const CRUD_Service = require('./CRUD_Service');
+const BaseService = require('./BaseService');
 
-class UserService extends CRUD_Service {
+class UserService extends BaseService {
     constructor(repository) {
         super(repository);
     }
 
     async create() {
-        
+
+    }
+
+    async update() {
+
+    }
+
+    async getByEmail() {
+
     }
 
 }

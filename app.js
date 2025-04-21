@@ -16,16 +16,19 @@ const UserRepository = require('./Repositories/userRepository');
 //services
 const ProductService = require('./Services/productService');
 const CategoryService = require('./Services/categoryService');
+const UserService = require('./Services/userService');
 const AuthService = require('./Services/authService');
 
 //controllers
 const ProductController = require('./Controllers/productController');
 const CategoryController = require('./Controllers/categoryController');
+const UserController = require('./Controllers/userController');
 const AuthController = require('./Controllers/authController');
 
 //routes
 const productRouter = require('./Routes/productRouter');
-const categoryRouter = require('./Routes/categoryRouter');
+const categoryRouter = require('./Routes/categoryRoute');
+const userRouter = require('./Routes/userRouter');
 const authRouter = require('./Routes/authRouter');
 
 //initialize express app
@@ -42,15 +45,18 @@ const userRepository = new UserRepository(UserModel);
 
 const categoryService = new CategoryService(categoryRepository);
 const productService = new ProductService(productRepository, categoryRepository);
+const userService = new UserService(userRepository);
 const authService = new AuthService(userRepository);
 
 const categoryController = new CategoryController(categoryService);
 const productController = new ProductController(productService);
+const userController = new UserController(userService);
 const authController = new AuthController(authService);
 
 
 //routes
 app.use('/auth', authRouter(authController));
+app.use('/user', userRouter(userController));
 app.use('/product', productRouter(productController));
 app.use('/category', categoryRouter(categoryController));
 

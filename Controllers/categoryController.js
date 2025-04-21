@@ -1,5 +1,5 @@
-const CRUD_Controller = require('./CRUD_Controller')
-class CategoryController extends CRUD_Controller {
+const BaseController = require('./BaseController')
+class CategoryController extends BaseController {
     constructor(service) {
         super(service)
     }

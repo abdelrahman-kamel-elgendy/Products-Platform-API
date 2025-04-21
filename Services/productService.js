@@ -1,4 +1,4 @@
-const CRUD_Service = require('./CRUD_Service');
+const BaseService = require('./BaseService');
 const Joi = require('joi');
 
 const productSchema = Joi.object({
@@ -10,7 +10,7 @@ const productSchema = Joi.object({
     isActive: Joi.boolean()
 });
 
-class ProductService extends CRUD_Service {
+class ProductService extends BaseService {
     constructor(productRepository, categoryRepository) {
         super(productRepository)
         this.categoryRepository = categoryRepository;
