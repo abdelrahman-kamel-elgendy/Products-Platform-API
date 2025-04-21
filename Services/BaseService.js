@@ -8,7 +8,7 @@ class BaseService {
     }
 
     async getActive() {
-        return this.repository.getActiveCategories();
+        return this.repository.getActive();
     }
 
     async getById(id) {

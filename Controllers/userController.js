@@ -8,6 +8,7 @@ class UserController extends BaseController {
     async getByEmail(req, res, next) {
         try {
             const user = await this.service.getByEmail(req.email);
+            console.log(user)
 
             if (!user)
                 throw new Error('User not found');

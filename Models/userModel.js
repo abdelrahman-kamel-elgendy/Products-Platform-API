@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const { boolean } = require('joi');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -23,6 +24,11 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required'],
         select: false,
         minlength: 8
+    },
+    isActive: {
+        type: Boolean,
+        default: true,
+        select: false
     },
     createdAt: {
         type: Date,

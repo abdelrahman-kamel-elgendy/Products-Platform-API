@@ -3,8 +3,12 @@ class BaseRepository {
         this.model = model;
     }
 
-    async getAll(filter = {}) {
-        return this.model.find(filter);
+    async getAll() {
+        return this.model.find();
+    }
+
+    async getActive() {
+        return this.model.find({ isActive: true });
     }
 
     async getById(id) {

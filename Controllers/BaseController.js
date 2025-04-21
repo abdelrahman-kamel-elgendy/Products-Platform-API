@@ -6,6 +6,10 @@ class BaseController {
     async create(req, res, next) {
         try {
             const entity = await this.service.create(req.body);
+            if (entity.password) {
+                entity.password = undefined;
+                entity.passwordUpdatedAt = undefined;
+            }
             entity.createdAt = undefined;
             entity.isActive = undefined;
 
