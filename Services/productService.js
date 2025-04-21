@@ -1,3 +1,4 @@
+const CRUD_Service = require('./CRUD_Service');
 const Joi = require('joi');
 
 const productSchema = Joi.object({
@@ -9,22 +10,10 @@ const productSchema = Joi.object({
     isActive: Joi.boolean()
 });
 
-class ProductService {
+class ProductService extends CRUD_Service {
     constructor(productRepository, categoryRepository) {
-        this.productRepository = productRepository;
+        super(productRepository)
         this.categoryRepository = categoryRepository;
-    }
-
-    async getAll() {
-        return this.productRepository.getAll();
-    }
-
-    async getActive() {
-        return this.productRepository.getActiveProducts();
-    }
-
-    async getById(id) {
-        return this.productRepository.getById(id);
     }
 
     async getByCategory(categoryId) {
@@ -51,10 +40,6 @@ class ProductService {
             throw new Error(error.details[0].message);
 
         return this.productRepository.update(id, productData);
-    }
-
-    async delete(id) {
-        return this.productRepository.delete(id);
     }
 }
 
