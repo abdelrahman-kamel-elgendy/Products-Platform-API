@@ -34,11 +34,33 @@ const errorHandler = (err, req, res, next) => {
         });
     }
 
+    if (err.message.toLowerCase().includes('passwords do not match')) {
+        return res.status(400).json({
+            success: false,
+            error: {
+                type: 'Invalid Data',
+                message: err.message
+            }
+        });
+    }
+
     if (err.message.includes('already exists')) {
         return res.status(409).json({
             success: false,
             error: {
                 type: 'Conflict',
+                message: err.message
+            }
+        });
+    }
+
+    if (err.message.toLowerCase().includes('invalid credentials')
+        || err.message.toLowerCase().includes('unauthorized access')
+        || err.message.toLowerCase().includes('account deleted')) {
+        return res.status(401).json({
+            success: false,
+            error: {
+                type: 'Unauthorized',
                 message: err.message
             }
         });

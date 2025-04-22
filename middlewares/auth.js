@@ -1,13 +1,17 @@
+const jwt = require('jsonwebtoken');
+
 const authMiddleware = (roles = []) => {
     return async (req, res, next) => {
         try {
-            const authHeader = req.headers.authorization;
-            if (!authHeader || !authHeader.startsWith('Bearer '))
-                throw new Error('Authentication token missing');
+            // Check both Authorization header and cookies
+            const token = req.cookies.token ||
+                (req.headers.authorization && req.headers.authorization.split(' ')[1]);
 
-            const token = authHeader.split(' ')[1];
-            const authService = req.container.resolve('authService');
-            const decoded = authService.verifyToken(token);
+            if (!token) {
+                throw new Error('Authentication token missing');
+            }
+
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
             // Check if user has required role
             if (roles.length && !roles.includes(decoded.role))

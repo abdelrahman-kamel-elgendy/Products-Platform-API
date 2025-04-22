@@ -6,7 +6,11 @@ class UserRepository extends BaseRepository {
     }
 
     async getByEmail(email) {
-        return await this.model.find({ email: email });
+        return await this.model.findOne({ email });
+    }
+
+    async getByEmailWithPassword(email) {
+        return await this.model.findOne({ email }).select('+password');
     }
 }
 

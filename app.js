@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const errorHandler = require('./middlewares/errorHandler');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 //models
 const ProductModel = require('./Models/productModel');
@@ -35,8 +36,11 @@ const authRouter = require('./Routes/authRouter');
 const app = express();
 
 //middleware
-app.use(cors());
+app.use(cors({
+    credentials: true // Allow cookies
+}));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 //dependency injection
 const categoryRepository = new CategoryRepository(CategoryModel);

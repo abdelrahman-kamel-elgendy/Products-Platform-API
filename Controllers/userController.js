@@ -8,7 +8,7 @@ class UserController extends BaseController {
     async getByEmail(req, res, next) {
         try {
 
-            console.log(req.params.email)
+            console.log(req)
             const user = await this.service.getByEmail(req.params.email);
 
             if (!user)

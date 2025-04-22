@@ -23,8 +23,26 @@ class AuthController {
     async login(req, res, next) {
         try {
             const { email, password } = req.body;
-            const result = await this.authService.login(email, password);
-            res.json(result);
+            const { token, user } = await this.authService.login(email, password);
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                maxAge: 24 * 60 * 60 * 1000,
+            });
+            res.status(200).json({
+                message: 'Logined successfully',
+                user
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    async logout(req, res, next) {
+        try {
+            res.clearCookie('token');
+            res.json({ message: 'Logged out successfully' });
         } catch (error) {
             next(error);
         }
