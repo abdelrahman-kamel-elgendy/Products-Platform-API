@@ -5,19 +5,18 @@ class BaseController {
 
     async create(req, res, next) {
         try {
-            const entity = await this.service.create(req.body);
-            if (entity.password) {
-                entity.password = undefined;
-                entity.passwordUpdatedAt = undefined;
+            const data = await this.service.create(req.body);
+
+            if (data.password) {
+                data.password = undefined;
+                data.passwordUpdatedAt = undefined;
             }
-            entity.createdAt = undefined;
-            entity.isActive = undefined;
+            data.createdAt = undefined;
+            data.isActive = undefined;
 
             res.status(201).json({
                 status: 'success',
-                data: {
-                    entity,
-                },
+                data
             });
         } catch (error) {
             next(error);
@@ -26,14 +25,12 @@ class BaseController {
 
     async getAll(req, res, next) {
         try {
-            const entity = await this.service.getAll();
+            const data = await this.service.getAll();
 
             res.status(200).json({
                 status: 'success',
-                data: {
-                    length: entity.length,
-                    entity,
-                },
+                length: data.length,
+                data
             });
         } catch (error) {
             next(error);
@@ -42,14 +39,12 @@ class BaseController {
 
     async getActive(req, res, next) {
         try {
-            const categories = await this.service.getActive();
+            const data = await this.service.getActive();
 
             res.status(200).json({
                 status: 'success',
-                data: {
-                    length: categories.length,
-                    categories,
-                },
+                length: data.length,
+                data
             });
         } catch (error) {
             next(error);
@@ -58,15 +53,13 @@ class BaseController {
 
     async getById(req, res, next) {
         try {
-            const entity = await this.service.getById(req.params.id);
-            if (!entity)
+            const data = await this.service.getById(req.params.id);
+            if (!data)
                 throw Error('Not found');
 
             res.status(200).json({
                 status: 'success',
-                data: {
-                    entity,
-                },
+                data
             });
         } catch (error) {
             next(error);
@@ -75,15 +68,13 @@ class BaseController {
 
     async update(req, res, next) {
         try {
-            const entity = await this.service.update(req.params.id, req.body);
-            if (!entity)
+            const data = await this.service.update(req.params.id, req.body);
+            if (!data)
                 throw new Error('Not found');
 
             res.status(200).json({
                 status: 'success',
-                data: {
-                    entity,
-                },
+                data
             });
         } catch (error) {
             next(error);
@@ -92,8 +83,8 @@ class BaseController {
 
     async delete(req, res, next) {
         try {
-            const entity = await this.service.delete(req.params.id);
-            if (!entity)
+            const data = await this.service.delete(req.params.id);
+            if (!data)
                 throw new Error('Not found');
 
             res.status(200).json({

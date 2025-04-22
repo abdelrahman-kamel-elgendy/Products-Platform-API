@@ -1,5 +1,5 @@
 const errorHandler = (err, req, res, next) => {
-    // console.error(err.stack);
+    console.error(err);
 
     const statusCode = err.status || 500;
     const message = statusCode === 500 ? 'Something went wrong!' : err.message;
@@ -24,7 +24,7 @@ const errorHandler = (err, req, res, next) => {
         });
     }
 
-    if (err.message.includes('Not found')) {
+    if (err.message.toLowerCase().includes('not found')) {
         return res.status(404).json({
             success: false,
             error: {

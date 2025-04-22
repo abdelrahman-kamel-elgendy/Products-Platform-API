@@ -31,7 +31,7 @@ class ProductService extends BaseService {
         if (error)
             throw new Error(error.details[0].message);
 
-        return this.productRepository.create(productData);
+        return this.repository.create(productData);
     }
 
     async update(id, productData) {
@@ -39,7 +39,7 @@ class ProductService extends BaseService {
         if (error)
             throw new Error(error.details[0].message);
 
-        return this.productRepository.update(id, productData);
+        return this.repository.update(id, productData);
     }
 }
 

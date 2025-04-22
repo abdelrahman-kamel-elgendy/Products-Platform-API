@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
 const BaseRepository = require('./BaseRepository');
-const categoryModel = require('../Models/categoryModel');
 
 class ProductRepository extends BaseRepository {
     constructor(model) {
