@@ -41,12 +41,11 @@ class AuthService {
 
         const user = await this.userRepository.getByEmailWithPassword(email);
 
-        if (!user.isActive)
-            throw new Error('Account deleted!');
-
         if (!user)
             throw new Error('Invalid credentials');
-        console.log(await user.comparePassword(password, user.password))
+
+        if (!user.isActive)
+            throw new Error('Account deleted!');
 
         if (!await user.comparePassword(password, user.password))
             throw new Error('Invalid credentials');

@@ -56,7 +56,8 @@ const errorHandler = (err, req, res, next) => {
 
     if (err.message.toLowerCase().includes('invalid credentials')
         || err.message.toLowerCase().includes('unauthorized access')
-        || err.message.toLowerCase().includes('account deleted')) {
+        || err.message.toLowerCase().includes('account deleted')
+        || err.message.toLowerCase().includes('invalid or expired token')) {
         return res.status(401).json({
             success: false,
             error: {

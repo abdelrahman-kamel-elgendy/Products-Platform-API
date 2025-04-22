@@ -10,7 +10,14 @@ class UserRepository extends BaseRepository {
     }
 
     async getByEmailWithPassword(email) {
-        return await this.model.findOne({ email }).select('+password');
+        return await this.model.findOne({ email }).select('+password').select('+isActive');
+    }
+
+    async getwithPasswordToken(token) {
+        return await this.model.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() }
+        });
     }
 }
 
